@@ -1,4 +1,4 @@
-# Video Editing and Splicing in ffmpeg
+# Cut and Splice Video files in ffmpeg
 ## Losslessly cut an mp4 video into several smaller clips
 
 ```
@@ -11,7 +11,7 @@ ffmpeg -i Walkthrough-20260807_140349-Meeting\ Recording.mp4 \
 -ss 00:42:50 -to 00:52:15 -c copy part-6-Risk-Styles-and-other-stories.mp4
 ```
 
-## Losslessly assemble several mp4 video clips into one
+## Losslessly combine several mp4 video clips into one
 
 1. Create a text file named **file_list.txt** in the same folder as videos.
 2. Add each file path on a separate line using the format: **file 'filename.mp4'**.
