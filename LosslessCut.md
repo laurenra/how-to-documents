@@ -1,6 +1,6 @@
 # Video Cutting and Splicing in LosslessCut
 [LosslessCut](https://losslesscut.app) is a graphical interface (GUI) for ffmpeg. 
-It's much easier to locate and cut videos into smaller segments than using the 
+It's much easier to locate and cut videos into smaller clips than using the 
 ffmpeg commands.
 
 LosslessCut is free or you can support it by installing it from the Microsoft 
