@@ -10,7 +10,14 @@
 
 [FFmpeg Filters](https://ffmpeg.org/ffmpeg-filters.html) (-vf and -va filtering options)
 
+[FFmpeg Filters > scale](https://ffmpeg.org/ffmpeg-filters.html#scale-1) (scale=1920:1080)
+
+[FFmpeg Filters > scale > Examples](https://ffmpeg.org/ffmpeg-filters.html#Examples-117)
+
+[FFmpeg Scaler](https://ffmpeg.org/ffmpeg-scaler.html#scaler_005foptions)
+
 [FFmpeg Formats](https://ffmpeg.org/ffmpeg-formats.html) (-movflags +faststart options for muxer, also demuxer options)
+
 
 ## Show info and statistics
 The **ffprobe** utility is included when ffmpeg is installed.
@@ -77,4 +84,15 @@ Each option in this command serves a specific purpose to ensure high quality and
 - **-vf format=yuv420p**: Set video filtergraph to enforce the standard YUV 4:2:0 planar 8-bit pixel format. QuickTime files often use pixel formats that default players (like standard Windows or web players) cannot read; this guarantees compatibility. The -vf option is an alias for -filter:v (video) and -va is an alias for -filter:a (audio). [[Filtering](https://ffmpeg.org/ffmpeg.html#Filtering), [FFmpeg Filters](https://ffmpeg.org/ffmpeg-filters.html)]
 - **-movflags +faststart**: Moves the file metadata to the front of the container. This allows the video to start playing immediately without waiting for the entire file to download when hosted on the web. [[FFmpeg Formats](https://ffmpeg.org/ffmpeg-formats.html), [MOV/MPEG-4 muxers](https://ffmpeg.org/ffmpeg-formats.html#MOV_002fMPEG_002d4_002fISOMBFF-muxers), [MOV/MPEG-4 muxer options](https://ffmpeg.org/ffmpeg-formats.html#Options-6)]
 
-more stuff...
+### Transcode from Quicktime .mov to .mp4 and scale to 1080p
+
+```
+ffmpeg -i input.mov -c:v libx264 -crf 20 -c:a aac -b:a 48k -vf 'scale=1920:1080, format=yuv420p' -movflags +faststart output.mp4
+```
+#### Command Breakdown
+Same as above but to implement multiple video filter options (-vf or -filter:v), surround them with quotes and separate them with commas.
+
+- **-vf 'scale=1920:1080, format=yuv420p'**: Set video filtergraph to scale to 1920x1080 (see above for yuv420p explanation). [[Filtering](https://ffmpeg.org/ffmpeg.html#Filtering), [FFmpeg Filters](https://ffmpeg.org/ffmpeg-filters.html), [FFmpeg Video Filters > scale](https://ffmpeg.org/ffmpeg-filters.html#scale-1), [FFmpeg Video Filters > scale > Examples](https://ffmpeg.org/ffmpeg-filters.html#Examples-117)]
+
+
+
