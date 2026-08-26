@@ -2,9 +2,15 @@
 
 ## Documentation
 
-[FFmpeg (all) documentation](https://ffmpeg.org/documentation.html)
+[FFmpeg documentation](https://ffmpeg.org/documentation.html)
 
-[FFmpeg manual](https://ffmpeg.org/ffmpeg.html)
+[FFmpeg manual](https://ffmpeg.org/ffmpeg.html) (command line options)
+
+[FFmpeg Codecs](https://ffmpeg.org/ffmpeg-codecs.html) (libx264 for mp4 video, aac for audio, etc.)
+
+[FFmpeg Filters](https://ffmpeg.org/ffmpeg-filters.html) (-vf and -va filtering options)
+
+[FFmpeg Formats](https://ffmpeg.org/ffmpeg-formats.html) (-movflags +faststart options for muxer, also demuxer options)
 
 ## Show info and statistics
 The **ffprobe** utility is included when ffmpeg is installed.
@@ -57,18 +63,18 @@ ffmpeg -f concat -safe 0 -i file_list.txt -c copy output.mp4
 ```
 
 ### Transcode from Quicktime .mov to .mp4
-
+See [Convert MOV to MP4 Using FFmpeg Simplified](https://ottverse.com/convert-mov-to-mp4-using-ffmpeg/)
 ```
 ffmpeg -i input.mov -c:v libx264 -crf 20 -c:a aac -b:a 192k -vf format=yuv420p -movflags +faststart output.mp4
 ```
 #### Command Breakdown
 Each option in this command serves a specific purpose to ensure high quality and universal playback compatibility:
 
-- -i input.mov: Specifies your source QuickTime video file. [[1](https://ottverse.com/convert-mov-to-mp4-using-ffmpeg/)]
-- -c:v libx264: Re-encodes the video stream into H.264 format, which plays on almost any device. [1, 2]
-- -crf 20: Sets the Constant Rate Factor for video quality. Lower numbers mean higher quality; 18 to 23 is considered the sweet spot for visual transparency. [1, 2]
-- -c:a aac -b:a 192k: Encodes the audio to AAC at a high-quality bit rate of 192 kbps. [1]
-- -vf format=yuv420p: Enforces the standard pixel format. QuickTime files often use pixel formats that default players (like standard Windows or web players) cannot read; this guarantees compatibility. [1, 2]
-- -movflags +faststart: Moves the file metadata to the front of the container. This allows the video to start playing immediately without waiting for the entire file to download when hosted on the web. [1]
+- **-i input.mov**: Specifies your source QuickTime video file. [[main options](https://ffmpeg.org/ffmpeg.html#Main-options)]
+- **-c:v libx264**: Re-encodes (-c or -codec) the *video* stream (-c:v or -codec:v) into H.264 format using the libx264 codec, which plays on almost any device. -c:v sets the video encoder, -c:a sets the audio encoder, and -c:s sets the subtitle encoder. [[main options](https://ffmpeg.org/ffmpeg.html#Main-options), [streamcopy](https://ffmpeg.org/ffmpeg.html#Streamcopy), [stream handling](https://ffmpeg.org/ffmpeg.html#Stream-handling), [FFmpeg Codecs](https://ffmpeg.org/ffmpeg-codecs.html), [libx264 video encoder options](https://ffmpeg.org/ffmpeg-codecs.html#libx264_002c-libx264rgb)]
+- **-crf 20**: Sets the Constant Rate Factor for video quality. Lower numbers mean higher quality; 18 to 28 is considered the sweet spot for visual transparency. 0 is lossless (massive file size) and 51 is very high compression (low quality, small files). [[libx264 video encoder options](https://ffmpeg.org/ffmpeg-codecs.html#libx264_002c-libx264rgb)]
+- **-c:a aac -b:a 192k**: Use the AAC audio encoder (aac), activate Constant Bit Rate mode and encode at a high-quality 192 kilobits per second (-b:a 192k). [[aac audio encoder options](https://ffmpeg.org/ffmpeg-codecs.html#aac)]
+- **-vf format=yuv420p**: Set video filtergraph to enforce the standard YUV 4:2:0 planar 8-bit pixel format. QuickTime files often use pixel formats that default players (like standard Windows or web players) cannot read; this guarantees compatibility. The -vf option is an alias for -filter:v (video) and -va is an alias for -filter:a (audio). [[Filtering](https://ffmpeg.org/ffmpeg.html#Filtering), [FFmpeg Filters](https://ffmpeg.org/ffmpeg-filters.html)]
+- **-movflags +faststart**: Moves the file metadata to the front of the container. This allows the video to start playing immediately without waiting for the entire file to download when hosted on the web. [[FFmpeg Formats](https://ffmpeg.org/ffmpeg-formats.html), [MOV/MPEG-4 muxers](https://ffmpeg.org/ffmpeg-formats.html#MOV_002fMPEG_002d4_002fISOMBFF-muxers), [MOV/MPEG-4 muxer options](https://ffmpeg.org/ffmpeg-formats.html#Options-6)]
 
 more stuff...
